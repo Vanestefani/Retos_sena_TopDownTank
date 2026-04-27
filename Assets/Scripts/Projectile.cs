@@ -5,14 +5,19 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public ParticleSystem impactFX;
-
+    public AudioClip Aud_Impacto;
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(impactFX, transform.position, Quaternion.identity);
+        if (Aud_Impacto != null)
+        {
+              AudioSource.PlayClipAtPoint(Aud_Impacto, transform.position);
+        }
 
-        if(collision.gameObject.tag == "PlayerTank")
+        if (collision.gameObject.tag == "PlayerTank")
         {
             collision.gameObject.GetComponent<TankHealth>().takeDamage(20);
+           
         }
 
         if (collision.gameObject.tag == "EnemyTank")

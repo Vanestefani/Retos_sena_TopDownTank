@@ -19,6 +19,9 @@ public class ThrowProjectile : MonoBehaviour
     // Time at which we’re next allowed to shoot
     private float nextTimeToFire = 0f;
     public ParticleSystem Muzzle_Flash;
+    public AudioSource Aud_Source;
+    public AudioClip Aud_Disparo;
+   
 
     void Update()
     {
@@ -30,6 +33,10 @@ public class ThrowProjectile : MonoBehaviour
             if (Muzzle_Flash != null)
             {
                 Muzzle_Flash.Play(); 
+            }
+            if (Aud_Source != null && Aud_Disparo != null)
+            {
+               Aud_Source.PlayOneShot(Aud_Disparo);
             }
         }
     }

@@ -154,3 +154,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactFX: {fileID: 2965232482085435431, guid: 4fc3a9287c2315e42beed922ea732d77, type: 3}
+  Aud_Impacto: {fileID: 8300000, guid: 9066f9aaa96f5b34b9c25863de2db3fc, type: 3}

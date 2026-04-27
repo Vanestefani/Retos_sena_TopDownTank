@@ -20,7 +20,10 @@ public class TankController : MonoBehaviour
     private Vector3 finalTurretLookDir;
 
     public Transform reticleTransform;
-
+    public AudioSource audioMotor;
+    public float AUD_Quieto = 0.9f;   
+    public float AUD_Maximo = 1.6f;   
+    public float AUD_Suavizado = 3f;  
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -79,4 +82,12 @@ public class TankController : MonoBehaviour
         bool estaMoviendose = Mathf.Abs(input.ForwardInput) > 0.1f || Mathf.Abs(input.RotationInput) > 0.1f;
         moduloEmision.rateOverTime = estaMoviendose ? Exhosto_Movimiento : Exhosto_Quieto;
     }
+    protected void ActualizarSonidoMotor()
+    {
+        if (audioMotor == null) return;
+        float intensidadInput = Mathf.Max(Mathf.Abs(input.ForwardInput), Mathf.Abs(input.RotationInput));
+        float pitchObjetivo = Mathf.Lerp(AUD_Quieto, AUD_Maximo, intensidadInput);
+        audioMotor.pitch = Mathf.Lerp(audioMotor.pitch, pitchObjetivo, Time.deltaTime * AUD_Suavizado);
+    }
 }
+

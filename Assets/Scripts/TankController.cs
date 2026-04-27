@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
+    public ParticleSystem Particulas_Exhosto; 
+    public float Exhosto_Quieto = 10f;      
+    public float Exhosto_Movimiento = 100f;
+    private ParticleSystem.EmissionModule moduloEmision;
+
     public float tankSpeed = 15f;
     public float tankRotationSpeed = 20f;
 
@@ -21,6 +26,10 @@ public class TankController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         input = GetComponent<Tank_Inputs>();
+        if (Particulas_Exhosto != null)
+        {
+            moduloEmision = Particulas_Exhosto.emission;
+        }
     }
 
     // Update is called once per frame
@@ -31,6 +40,7 @@ public class TankController : MonoBehaviour
             HandleMovement();
             HandleReticle();
             HandleTurret();
+            Exhosto_Cambiar_Num_Particu ();
         }
         
     }
@@ -62,5 +72,11 @@ public class TankController : MonoBehaviour
     protected virtual void HandleReticle()
     {
         reticleTransform.position = input.reticlePosition;
+    }
+    protected void Exhosto_Cambiar_Num_Particu()
+    {
+        if (Particulas_Exhosto == null) return;
+        bool estaMoviendose = Mathf.Abs(input.ForwardInput) > 0.1f || Mathf.Abs(input.RotationInput) > 0.1f;
+        moduloEmision.rateOverTime = estaMoviendose ? Exhosto_Movimiento : Exhosto_Quieto;
     }
 }

@@ -189,6 +189,6 @@ public class EnemyTankAI : MonoBehaviour
         );
 
         // Immediately give it velocity forward based on throwPoint's forward vector
-        projInstance.velocity = throwPoint.forward * launchForce;
+        projInstance.linearVelocity = throwPoint.forward * launchForce;
     }
 }

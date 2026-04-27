@@ -18,6 +18,7 @@ public class ThrowProjectile : MonoBehaviour
 
     // Time at which we’re next allowed to shoot
     private float nextTimeToFire = 0f;
+    public ParticleSystem Muzzle_Flash;
 
     void Update()
     {
@@ -26,6 +27,10 @@ public class ThrowProjectile : MonoBehaviour
         {
             ThrowProjectile1();
             nextTimeToFire = Time.time + timeBetweenShots;
+            if (Muzzle_Flash != null)
+            {
+                Muzzle_Flash.Play(); 
+            }
         }
     }
 
@@ -45,6 +50,6 @@ public class ThrowProjectile : MonoBehaviour
         );
 
         // Immediately give it velocity forward based on throwPoint’s forward vector
-        projInstance.velocity = throwPoint.forward * launchForce;
+        projInstance.linearVelocity = throwPoint.forward * launchForce;
     }
 }

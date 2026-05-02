@@ -16,28 +16,45 @@ public class ThrowProjectile : MonoBehaviour
     [Tooltip("Minimum time (in seconds) between consecutive shots.")]
     public float timeBetweenShots = 0.5f;
 
-    // Time at which we’re next allowed to shoot
-    private float nextTimeToFire = 0f;
+    // Time at which we’re next allowed to shoot
+    private float nextTimeToFire = 0f;
     public ParticleSystem Muzzle_Flash;
     public AudioSource Aud_Source;
     public AudioClip Aud_Disparo;
+    public Animator Anima_Cañon;
    
-
     void Update()
     {
-        // On left mouse‐button down, check cooldown
+        // Solo disparamos si se presiona el botón y el cooldown terminó
         if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
         {
-            ThrowProjectile1();
             nextTimeToFire = Time.time + timeBetweenShots;
-            if (Muzzle_Flash != null)
-            {
-                Muzzle_Flash.Play(); 
-            }
-            if (Aud_Source != null && Aud_Disparo != null)
-            {
-               Aud_Source.PlayOneShot(Aud_Disparo);
-            }
+            DispararConAnimacion();
+        }
+        else if (Anima_Cañon != null && Anima_Cañon.GetBool("Disparar"))
+        {
+          
+          
+            Anima_Cañon.SetBool("Disparar", false);
+        }
+
+    }
+
+    private void DispararConAnimacion()
+    {
+        ThrowProjectile1();
+
+        if (Muzzle_Flash != null) Muzzle_Flash.Play();
+
+        if (Aud_Source != null && Aud_Disparo != null)
+        {
+            Aud_Source.PlayOneShot(Aud_Disparo);
+        }
+
+        if (Anima_Cañon != null)
+        {
+            Anima_Cañon.SetBool("Disparar", true);
+            Debug.Log("Bool 'Disparar' activado.");
         }
     }
 
@@ -49,14 +66,14 @@ public class ThrowProjectile : MonoBehaviour
             return;
         }
 
-        // Instantiate a new Rigidbody at the throwPoint’s position & rotation
-        Rigidbody projInstance = Instantiate(
-            projectilePrefab,
-            throwPoint.position,
-            throwPoint.rotation
-        );
+        // Instantiate a new Rigidbody at the throwPoint’s position & rotation
+        Rigidbody projInstance = Instantiate(
+      projectilePrefab,
+      throwPoint.position,
+      throwPoint.rotation
+    );
 
-        // Immediately give it velocity forward based on throwPoint’s forward vector
-        projInstance.linearVelocity = throwPoint.forward * launchForce;
+        // Immediately give it velocity forward based on throwPoint’s forward vector
+        projInstance.linearVelocity = throwPoint.forward * launchForce;
     }
 }

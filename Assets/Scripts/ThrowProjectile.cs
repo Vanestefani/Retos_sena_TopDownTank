@@ -25,7 +25,7 @@ public class ThrowProjectile : MonoBehaviour
    
     void Update()
     {
-        // Solo disparamos si se presiona el botón y el cooldown terminó
+       
         if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + timeBetweenShots;
@@ -54,7 +54,7 @@ public class ThrowProjectile : MonoBehaviour
         if (Anima_Cañon != null)
         {
             Anima_Cañon.SetBool("Disparar", true);
-            Debug.Log("Bool 'Disparar' activado.");
+          
         }
     }
 
